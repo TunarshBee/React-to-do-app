@@ -1,46 +1,54 @@
-import React, { Component } from "react";
-import PropTypes from 'prop-types'
+import React, { useState } from "react";
 
-export class AddTodo extends Component {
-  state = {
-    title: "",
+
+const AddTodo = ({ addTodo }) => {
+  const [title, setTitle] = useState("");
+  const [dir, setDir] = useState("");
+
+  const onChange = (e) => {
+    setTitle(e.target.value);
   };
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-};
-
-onSubmit = (e) => {
-    e.preventDefault()
-    this.props.addTodo(this.state.title)
-    this.setState({ title: '' });
+  const onChangeDir = (e) => {
+    setDir(e.target.value);
   };
 
-  render() {
-    return (
-      <div>
-        <form style={{ display: "flex" }} onSubmit={this.onSubmit} >
-          <input
-            type="text"
-            style={{ flex: "10", padding: "5px" }}
-            name="title"
-            placeholder="Add Todo..."
-            value={this.state.title}
-            onChange={this.onChange}
+  const onSubmit = (e) => {
+    e.preventDefault();
+    addTodo(title, dir);
+    setTitle("");
+    setDir('')
+  };
+
+  return (
+    <div>
+      <form style={{ display: "flex" }} onSubmit={onSubmit}>
+      <b>Movie Title</b>
+        <input
+          type="text"
+          style={{ flex: "10", padding: "5px", margin: "16px" }}
+          name="title"
+          placeholder="Add Todo..."
+          value={title}
+          onChange={onChange}
           />
-          <input
-            type="submit"
-            value="Add Todo"
-            className="btn"
-            style={{ flex: "1" }}
-          />
-        </form>
-      </div>
-    );
-  }
-}
-//PropTypes
-AddTodo.propTypes = {
-  addTodo: PropTypes.func.isRequired
+          <b>Directors</b>
+        <input
+          type="text"
+          style={{ flex: "10", padding: "5px", margin: "16px" }}
+          name="title"
+          placeholder="Add Todo..."
+          value={dir}
+          onChange={onChangeDir}
+        />
+        <input
+          type="submit"
+          value="Add "
+          className="btn"
+          style={{ flex: "1", padding: "15px 30px", margin: "16px" }}
+        />
+      </form>
+    </div>
+  );
 };
 
 export default AddTodo;

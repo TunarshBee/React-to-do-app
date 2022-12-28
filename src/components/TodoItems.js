@@ -1,48 +1,46 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-export class TodoItems extends Component {
-  getStyle = () => {
+import React from "react";
+const TodoItems = ({ todo, delTodo }) => {
+  const { id, title, dir } = todo;
+
+  const getStyle = () => {
     return {
-      textDecoration: this.props.todo.completed ? "line-through" : "none",
-      color: "red",
+      color: "black",
       backgroundColor: "#f4f4f4",
       padding: "10px",
       borderBottom: "1px #ccc dotted",
+      width:"70%",
+      display: "inline-flex",
+      justifyContent: "space-between",
+      alignItems: "center",
     };
   };
-
-  render() {
-    const { id, title } = this.props.todo;
-
+  if (title === "" || dir === "") {
+    return <div>Please type something in the input fields</div>;
+  } else {
     return (
       <div>
-        <p style={this.getStyle()}>
-          <input
-            type="checkbox"
-            onChange={this.props.markComplete.bind(this, id)}
-          />{" "}
-          {title}
-          <button style={btnStyle} onClick={this.props.delTodo.bind(this, id)}>x</button>
+        <p style={getStyle()}>
+          <span>{title}</span>
+          <span>{dir}</span>
         </p>
+        <button style={btnStyle} onClick={() => delTodo(id)}>
+          Remove
+        </button>
       </div>
     );
   }
-}
-//PropTypes
-TodoItems.propTypes = {
-  todo: PropTypes.object.isRequired,
-  markComplete: PropTypes.func.isRequired,
-  delTodo: PropTypes.func.isRequired
 };
 
-const btnStyle={
-    backgroundColor:"#f00",
-    color:"#fff",
-    padding:"5px 9px",
-    border:"none",
-    float:'right',
-    borderRadius:'50%',
-    outline:'none',
-    cursor:'pointer',
-}
+const btnStyle = {
+  backgroundColor: "#f00",
+  color: "#fff",
+  padding: "15px 39px",
+  border: "none",
+  float: "right",
+  // borderRadius: "50%",
+  outline: "none",
+  cursor: "pointer",
+  flex: "1",
+  margin: "16px",
+};
 export default TodoItems;
